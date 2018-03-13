@@ -127,6 +127,34 @@ MouseEventListener {
         }
     }
 
+    function action_sendDebugNotification() {
+        notifications.addNotification({
+            "actions": [],
+            "appIcon": "configure",
+            "icon": "configure",
+            "appName": "notify-send",
+            "appRealName": "",
+            "body": "test2 <a href='http://goolgle.com'>http://google.com</a>",
+            "configurable": false,
+            "desktopEntry": "",
+            "eventId": "",
+            "expireTimeout": 5000,
+            "id": "1",
+            "isPersistent": false,
+            "summary": "test",
+            "urgency": 1,
+            "urls": {},
+            "hasDefaultAction": false,
+            "source": "notification 1"
+        })
+    }
+
+    // Timer {
+    //     running: true
+    //     interval: 1000
+    //     onTriggered: action_sendDebugNotification()
+    // }
+
     function action_clearNotifications() {
         notifications.clearNotifications();
         notifications.clearHistory();
@@ -137,6 +165,7 @@ MouseEventListener {
     }
 
     Component.onCompleted: {
+        // plasmoid.setAction("sendDebugNotification", i18n("Debug Notification"), "")
         plasmoid.setAction("clearNotifications", i18n("Clear Notifications"), "edit-clear")
         var clearAction = plasmoid.action("clearNotifications");
         clearAction.visible = Qt.binding(function() {
