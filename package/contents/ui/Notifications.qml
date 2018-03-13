@@ -19,6 +19,7 @@
 
 import QtQuick 2.0
 import QtQuick.Layouts 1.2
+import QtQuick.Window 2.2
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
@@ -243,19 +244,33 @@ Column {
 
     }
 
-    Connections {
-        target: plasmoid.nativeInterface
-        onAvailableScreenRectChanged: {
-            notificationPositioner.setPlasmoidScreenGeometry(availableScreenRect);
-        }
+    // Connections {
+    //     target: plasmoid.nativeInterface
+    //     onAvailableScreenRectChanged: {
+    //         notificationPositioner.setPlasmoidScreenGeometry(availableScreenRect);
+    //     }
+    // }
+
+    function updateScreenGeometry() {
+        var availableScreenRect = Qt.rect(
+            Screen.virtualX,
+            Screen.virtualY,
+            Screen.desktopAvailableWidth,
+            Screen.desktopAvailableHeight - 32
+        );
+        // console.log('materialnotifications', 'updateScreenGeometry', availableScreenRect)
+        notificationPositioner.setPlasmoidScreenGeometry(availableScreenRect);
     }
 
     NotificationsHelper {
         id: notificationPositioner
-        popupLocation: plasmoid.nativeInterface.screenPosition
+        // https://github.com/KDE/plasma-workspace/blob/master/applets/notifications/plugin/notificationshelper.h#L37
+        // popupLocation: plasmoid.nativeInterface.screenPosition
+        popupLocation: NotificationsHelper.BottomRight
 
         Component.onCompleted: {
-            notificationPositioner.setPlasmoidScreenGeometry(plasmoid.nativeInterface.availableScreenRect);
+            // notificationPositioner.setPlasmoidScreenGeometry(plasmoid.nativeInterface.availableScreenRect);
+            notificationsRoot.updateScreenGeometry()
         }
         onPopupShown: notificationsRoot.popupShown(popup)
     }

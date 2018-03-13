@@ -55,21 +55,21 @@ Item {
             text: i18n("Track file transfers and other jobs")
         }
         
-        QtControls.CheckBox {
-            id: useCustomPopupPositionCheckBox
-            text: i18n("Use custom position for the notification popup")
-            checked: plasmoid.nativeInterface.configScreenPosition() != NotificationsHelper.Default
-        }
+        // QtControls.CheckBox {
+        //     id: useCustomPopupPositionCheckBox
+        //     text: i18n("Use custom position for the notification popup")
+        //     checked: plasmoid.nativeInterface.configScreenPosition() != NotificationsHelper.Default
+        // }
 
-        ScreenPositionSelector {
-            id: screenPositionSelector
-            enabled: useCustomPopupPositionCheckBox.checked
-            selectedPosition: plasmoid.nativeInterface.screenPosition
-            disabledPositions: [NotificationsHelper.Left, NotificationsHelper.Center, NotificationsHelper.Right]
-        }
+        // ScreenPositionSelector {
+        //     id: screenPositionSelector
+        //     enabled: useCustomPopupPositionCheckBox.checked
+        //     selectedPosition: plasmoid.nativeInterface.screenPosition
+        //     disabledPositions: [NotificationsHelper.Left, NotificationsHelper.Center, NotificationsHelper.Right]
+        // }
     }
 
     Component.onCompleted: {
-        plasmoid.nativeInterface.screenPosition = Qt.binding(function() {configurationChanged(); return screenPositionSelector.selectedPosition; });
+        // plasmoid.nativeInterface.screenPosition = Qt.binding(function() {configurationChanged(); return screenPositionSelector.selectedPosition; });
     }
 }
