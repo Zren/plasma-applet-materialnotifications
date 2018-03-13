@@ -149,18 +149,22 @@ Comment[zh_TW]=顯示通知與工作
 Type=Service
 Icon=preferences-desktop-notification
 X-KDE-ParentApp=
-X-KDE-PluginInfo-Author=Martin Klapetek
+X-KDE-PluginInfo-Author=Chris Holland
 X-KDE-PluginInfo-Category=Tasks
-X-KDE-PluginInfo-Email=mklapetek@kde.org
+X-KDE-PluginInfo-Email=zrenfire@gmail.com
 X-KDE-PluginInfo-License=GPL-2.0+
-X-KDE-PluginInfo-Name=org.kde.plasma.notifications
-X-KDE-PluginInfo-Version=3.0
+X-KDE-PluginInfo-Name=com.github.zren.materialnotifications
+X-KDE-PluginInfo-Version=1
 X-KDE-PluginInfo-Website=http://plasma.kde.org/
 X-KDE-ServiceTypes=Plasma/Applet
 X-Plasma-API=declarativeappletscript
 X-Plasma-Provides=org.kde.plasma.notifications
 X-KDE-PluginInfo-EnabledByDefault=true
 X-KDE-Library=plasma_applet_notifications
+
+X-KDE-PluginInfo-OrigName=org.kde.plasma.notifications
+X-KDE-PluginInfo-OrigAuthor=Martin Klapetek
+X-KDE-PluginInfo-OrigEmail=mklapetek@kde.org
 
 X-Plasma-MainScript=ui/main.qml
 X-Plasma-RequiredExtensions=LaunchApp
