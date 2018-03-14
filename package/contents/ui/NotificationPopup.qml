@@ -35,6 +35,8 @@ PlasmaCore.Dialog {
     type: PlasmaCore.Dialog.Notification
     flags: Qt.WindowDoesNotAcceptFocus
 
+    backgroundHints: PlasmaCore.Types.NoBackground
+
     property var notificationProperties: ({})
     signal notificationTimeout()
 

@@ -30,7 +30,9 @@ import org.kde.kquickcontrolsaddons 2.0
 MouseArea {
     id: notificationItem
     width: parent.width
-    implicitHeight: Math.max(appIconItem.valid || imageItem.nativeWidth > 0 ? units.iconSizes.large : 0, mainLayout.height)
+    implicitHeight: Math.max(notificationItem.iconSize, mainLayout.height) + actionsColumn.height
+    readonly property int iconSize: 80 * units.devicePixelRatio
+    readonly property int textHorizontalSpacing: 16 * units.devicePixelRatio
 
     // We need to clip here because we support displaying images through <img/>
     // and if we don't clip, they will be painted over the borders of the dialog/item
@@ -142,27 +144,35 @@ MouseArea {
         onTriggered: updateTimeLabel()
     }
 
-    PlasmaCore.IconItem {
-        id: appIconItem
+    Rectangle {
+        anchors.fill: parent
+        color: theme.backgroundColor
+    }
 
-        width: units.iconSizes.large
-        height: units.iconSizes.large
+    Item {
+        id: iconArea
+        Layout.alignment: Qt.AlignTop
+        width: notificationItem.iconSize
+        height: notificationItem.iconSize
 
         anchors {
             top: parent.top
             left: parent.left
         }
 
-        visible: imageItem.nativeWidth == 0 && valid
-        animated: false
-    }
+        PlasmaCore.IconItem {
+            id: appIconItem
+            anchors.fill: parent
+            visible: imageItem.nativeWidth == 0 && valid
+            animated: false
+        }
 
-    QImageItem {
-        id: imageItem
-        anchors.fill: appIconItem
-
-        smooth: true
-        visible: nativeWidth > 0
+        QImageItem {
+            id: imageItem
+            anchors.fill: parent
+            smooth: true
+            visible: nativeWidth > 0
+        }
     }
 
     ColumnLayout {
@@ -170,7 +180,7 @@ MouseArea {
 
         anchors {
             top: parent.top
-            left: appIconItem.valid || imageItem.nativeWidth > 0 ? appIconItem.right : parent.left
+            left: iconArea.right
             right: parent.right
             leftMargin: units.smallSpacing
         }
@@ -179,7 +189,7 @@ MouseArea {
 
         RowLayout {
             id: titleBar
-            spacing: units.smallSpacing
+            spacing: 0
 
             PlasmaExtras.Heading {
                 id: summaryLabel
@@ -206,7 +216,7 @@ MouseArea {
                 }
             }
 
-            PlasmaComponents.ToolButton {
+            MaterialButton {
                 id: settingsButton
                 width: units.iconSizes.smallMedium
                 height: width
@@ -223,14 +233,13 @@ MouseArea {
                 }
             }
 
-            PlasmaComponents.ToolButton {
+            MaterialButton {
                 id: closeButton
 
                 width: units.iconSizes.smallMedium
                 height: width
-                flat: compact
 
-                iconSource: "window-close"
+                iconSource: "window-close-symbolic"
 
                 onClicked: close()
             }
@@ -382,31 +391,6 @@ MouseArea {
                     }
                 }
             }
-
-            ColumnLayout {
-                id: actionsColumn
-                Layout.alignment: Qt.AlignTop
-                Layout.maximumWidth: theme.mSize(theme.defaultFont).width * (compact ? 10 : 16)
-                // this is so it never collapses but always follows what the Buttons below want
-                // but also don't let the buttons get too narrow (e.g. "View" or "Open" button)
-                Layout.minimumWidth: Math.max(units.gridUnit * 4, implicitWidth)
-
-                spacing: units.smallSpacing
-                visible: notificationItem.actions && notificationItem.actions.count > 0
-
-                Repeater {
-                    id: actionRepeater
-                    model: notificationItem.actions
-
-                    PlasmaComponents.Button {
-                        Layout.fillWidth: true
-                        Layout.preferredWidth: minimumWidth
-                        Layout.maximumWidth: actionsColumn.Layout.maximumWidth
-                        text: model.text
-                        onClicked: notificationItem.action(model.id)
-                    }
-                }
-            }
         }
 
         Loader {
@@ -415,6 +399,31 @@ MouseArea {
             Layout.preferredHeight: item ? item.implicitHeight : 0
             source: "ThumbnailStrip.qml"
             active: notificationItem.urls.length > 0
+        }
+    }
+
+    ColumnLayout {
+        id: actionsColumn
+
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
+
+        spacing: 0
+        visible: notificationItem.actions && notificationItem.actions.count > 0
+
+        Repeater {
+            id: actionRepeater
+            model: notificationItem.actions
+
+            ActionButton {
+                Layout.fillWidth: true
+                text: model.text
+                iconSource: model.icon
+                onClicked: notificationItem.action(model.id)
+            }
         }
     }
 }
