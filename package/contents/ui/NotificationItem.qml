@@ -53,6 +53,8 @@ MouseArea {
     property var created
     property var urls: []
 
+    property bool wrapBody: true
+
     property int maximumTextHeight: -1
 
     property ListModel actions: ListModel { }
@@ -289,7 +291,7 @@ MouseArea {
                     renderType: Text.NativeRendering
                     selectByMouse: true
                     readOnly: true
-                    wrapMode: Text.Wrap
+                    wrapMode: notificationItem.wrapBody ? Text.Wrap : Text.NoWrap
                     textFormat: TextEdit.RichText
 
                     // ensure selecting text scrolls the view as needed...

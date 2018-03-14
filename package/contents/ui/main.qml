@@ -147,6 +147,38 @@ MouseEventListener {
             "hasDefaultAction": false,
             "source": "notification 1"
         })
+        notifications.addNotification({
+            "actions": [
+                    {
+                            "icon": "checkerplus/checkmark",
+                            "id": "0",
+                            "text": "Mark as read"
+                    },
+                    {
+                            "icon": "checkerplus/trash",
+                            "id": "1",
+                            "text": "Delete"
+                    }
+            ],
+            "appIcon": "google-chrome",
+            "appName": "Google Chrome",
+            "appRealName": "",
+            "appServiceIcon": "google-chrome",
+            "appServiceName": "Google Chrome",
+            "body": "<?xml version=\"1.0\"?><html>[GPU] Zotac GeForce GTX 960 2GB ($200) [London Drugs] londondrugs.com/zotac-geforc.. Submitted March 13, 2018 at...</html>\n",
+            "configurable": false,
+            "desktopEntry": "google-chrome",
+            "eventId": "",
+            "expireTimeout": 8680,
+            "id": "29",
+            "isPersistent": true,
+            "summary": "reddit - [GPU] Zotac GeForce GTX 960 2GB ($200) [London Drugs] via /r/bapcsalescanada",
+            "urgency": 2,
+            "urls": {},
+            "hasDefaultAction": true,
+            "wrapBody": true,
+            "source": "notification 2"
+        })
     }
 
     // Timer {

@@ -222,6 +222,7 @@ Column {
             var actions = []
             _data["hasDefaultAction"] = false
             _data["expireTimeout"] = Math.min(_data["expireTimeout"], 10000) // Maximum of 10 seconds
+            _data["wrapBody"] = true
             if (data["actions"] && data["actions"].length % 2 == 0) {
                 for (var i = 0; i < data["actions"].length; i += 2) {
                     var action = data["actions"][i]
@@ -231,10 +232,20 @@ Column {
                         _data["hasConfigureAction"] = true;
                         _data["configurable"] = true;
                     } else {
-                        actions.push({
+                        var newAction = {
                             id: data["actions"][i],
-                            text: data["actions"][i+1]
-                        })
+                            text: data["actions"][i+1],
+                            icon: "",
+                        }
+                        if (newAction.text == "Mark as read" || newAction.text == "Mark as read (All)") {
+                            newAction.icon = "checkerplus/checkmark"
+                        } else if (newAction.text == "Delete" || newAction.text == "Delete (All)") {
+                            newAction.icon = "checkerplus/trash"
+                        }
+                        if (newAction.text == "Mark as read (All)" || newAction.text == "Delete (All)") {
+                            _data["wrapBody"] = false
+                        }
+                        actions.push(newAction)
                     }
                 }
             }
