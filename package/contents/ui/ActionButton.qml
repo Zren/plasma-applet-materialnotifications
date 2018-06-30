@@ -76,6 +76,7 @@ MouseArea {
     }
 
     property alias iconSource: iconItem.source
+    readonly property bool iconValid: !!iconItem.source
     AppletIcon {
         id: iconItem
         anchors.left: parent.left
@@ -91,7 +92,7 @@ MouseArea {
     PlasmaComponents.Label {
         id: textLabel
         anchors.left: parent.left
-        anchors.leftMargin: 18 + (iconItem.source && iconItem.valid ? 30 : 0)
+        anchors.leftMargin: 18 + (iconValid ? 30 : 0)
         anchors.top: parent.top
         anchors.topMargin: 1 + 11 //+ 10
         font.pointSize: -1
