@@ -48,7 +48,7 @@ PlasmaComponents.ListItem {
     MouseArea {
         width: parent.width
         height: childrenRect.height
-        acceptedButtons: Qt.NoButtons
+        acceptedButtons: Qt.NoButton
 
         drag {
             target: notificationItem
@@ -119,7 +119,7 @@ PlasmaComponents.ListItem {
             actions: model.actions
             created: model.created
             hasDefaultAction: model.hasDefaultAction
-            hasConfigureAction: model.hasConfigureAction
+            hasConfigureAction: model.hasConfigureAction || false
             urls: {
                 // QML ListModel tries to be smart and turns our urls Array into a dict with index as key...
                 var urls = []
